@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GetPokemon</title>
+	<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<style>
+
+body {
+position: relative;
+ background-color: #1F4690;
+}
+
+.container{
+position: relative;	
+}
+
+.table {
+
+position: absolute;
+    display:table;
+    width: 50%;
+	top: 150px;
+	margin-left:24%; 
+    margin-right:20%;
+}
+
+.table td {
+text-align: center;
+} 
+
+button{
+	text-decoration: none;
+}
+
+</style>
+
+
+<div class = "container">
+<h1 class = "text-center text-white sticky-top" > Pokémon </h1>
+<div class = "text-center">
+<button type="button" id="get-pokemon-button" class="btn btn-light btn-lg sticky-top "> Get Pokemon</button>
+</div>
+<div id="poke-list"></div>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+
+	$('#get-pokemon-button').on('click', function(){
+		$.get('https://pokeapi.co/api/v2/pokemon/', function(data, status){
+			console.log(data);
+			
+			var string = "";
+			
+			string += "<table class = 'table table-striped'> ";
+			
+			$.each(data.results, function(index, item){
+				string += "<tr><td> <a class = 'text-decoration-none link-light' href = '" + item.url + "' >" + item.name + "</td> <td> <button class ='hide-button btn btn-light , btn-sm' btn btn-primary> Hide </button> </td> </tr>";
+				
+			});
+			
+			string += "</table>";
+		
+		$('#poke-list').html(string);
+			
+			if(status){
+					$('.hide-button').on('click', function() {
+		$(this).parent().parent().hide();
+	});
+			}
+		
+			
+		});
+		
+	});
+	
+});
+
+</script>
+
+
+</body>
+</html>
